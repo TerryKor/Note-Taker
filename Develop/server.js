@@ -22,7 +22,11 @@ app.get("/", (req, res) => res.send("/home"));
 
 app.get("/notes", (req, res) =>
   res.sendFile(path.join(__dirname, "public/notes.html"))
-);
+);   
+
+
+
+
 
 app.get("/home", (req, res) =>
   res.sendFile(path.join(__dirname, "public/index.html"))
