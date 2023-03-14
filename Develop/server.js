@@ -42,6 +42,20 @@ app.post('/api/notes', (req, res)=>{
     console.log(err)
     else console.log("Successful")
   })
+
+  let response;
+
+  // Check if there is anything in the response body
+  if (req.body && req.body.product) {
+    response = {
+      status: 'success',
+      data: req.body,
+    };
+    res.status(201).json(response);
+  } else {
+    res.status(400).json('Request body must at least contain a product name');
+  }
+  
 })
 
 // listen() method is responsible for listening for incoming connections on the specified port 
