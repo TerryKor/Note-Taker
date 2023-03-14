@@ -4,7 +4,6 @@ const fs = require("fs");
 
 // Import built-in Node.js package 'path' to resolve path of files that are located on the server
 const path = require("path");
-const { json } = require("express");
 
 // Initialize an instance of Express.js
 const app = express();
@@ -14,31 +13,22 @@ const PORT = process.env.PORT || 3001;
 
 // Static middleware pointing to the public folder
 app.use(express.static("Develop/public"));
-
 app.use(express.json());
 
-
-// Create Express.js routes for default '/', '/send' and '/routes' endpoints
-app.get("/", (req, res) =>{
-console.log(__dirname)
-  res.sendFile(path.join(__dirname, "public/index.html"))
-}
-);
+// Create Express.js routes for default '/',  and '/notes' endpoints
+app.get("/", (req, res) => {
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 app.get("/notes", (req, res) =>
-res.sendFile(path.join(__dirname, "public/notes.html"))
-);   
-
-
-
-
-
-
+  res.sendFile(path.join(__dirname, "public/notes.html"))
+);
+// get method to display notes in db.json
 app.get("/api/notes", (req, res) => {
-  //return (res.send(path.join(__dirname, 'db/db.js')))
-
   res.json(db);
 });
+// post method to save notes to db.json
 app.post("/api/notes", (req, res) => {
   console.log(req.body);
   db.push(req.body);
@@ -61,10 +51,10 @@ app.post("/api/notes", (req, res) => {
     };
     res.status(201).json(response);
   } else {
-    res.status(400).json("Request body must at least contain a product name");
+    res.status(400).json("Request body must at least contain some data");
   }
 });
-
+// deleting notes by id
 app.delete("/api/notes/:id", (req, res) => {
   db.forEach((element) => {
     if (element.id == req.params.id) {
@@ -90,7 +80,7 @@ app.delete("/api/notes/:id", (req, res) => {
     };
     res.status(201).json(response);
   } else {
-    res.status(400).json("Request body must at least contain a product name");
+    res.status(400).json("Request body must at least contain some data");
   }
 });
 
