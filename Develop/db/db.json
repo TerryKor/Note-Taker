@@ -1,7 +1,4 @@
- [
-    {
-      "title": "Test Title",
-      "text": "Test text"
-    }
+[
+  { "id": "123", "title": "Test Title", "text": "Test text" },
+  { "id": "12828230a06f6", "title": "new note", "text": "nte body" }
 ]
-

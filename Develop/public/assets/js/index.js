@@ -68,6 +68,7 @@ const renderActiveNote = () => {
 
 const handleNoteSave = () => {
   const newNote = {
+    id: Math.random().toString(16).slice(2),
     title: noteTitle.value,
     text: noteText.value,
   };

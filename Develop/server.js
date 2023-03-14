@@ -1,10 +1,11 @@
 
 const express = require('express');
-const db = require('./db/db')
+const db = require('./db/db.json')
 const fs = require('fs')
 
 // Import built-in Node.js package 'path' to resolve path of files that are located on the server
 const path = require('path');
+const { json } = require('express');
 
 // Initialize an instance of Express.js
 const app = express();
@@ -14,6 +15,8 @@ const PORT = 3001;
 
 // Static middleware pointing to the public folder
 app.use(express.static('public'));
+
+app.use(express.json())
 
 // Create Express.js routes for default '/', '/send' and '/routes' endpoints
 app.get('/', (req, res) => res.send('/home'));
@@ -28,11 +31,17 @@ app.get('/home', (req, res) =>
 
 app.get('/api/notes', (req, res)=>{
   //return (res.send(path.join(__dirname, 'db/db.js')))
-  return res.send(Object.values(db))
+
+  res.json(db)
 })
 app.post('/api/notes', (req, res)=>{
-  console.log(res.body)
-  
+  console.log(req.body)
+  db.push(req.body)
+  fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(db), (err)=>{
+    if(err)
+    console.log(err)
+    else console.log("Successful")
+  })
 })
 
 // listen() method is responsible for listening for incoming connections on the specified port 
