@@ -58,6 +58,28 @@ app.post('/api/notes', (req, res)=>{
   
 })
 
+app.delete('/api/notes/:id', (req, res)=>{
+  
+  db.forEach((element)=>{
+    if(element.id == req.params.id){
+      db.pop(element)
+    }
+  })
+
+  let response;
+
+  // Check if there is anything in the response body
+  if (req.body && req.body.product) {
+    response = {
+      status: 'success',
+      data: req.body,
+    };
+    res.status(201).json(response);
+  } else {
+    res.status(400).json('Request body must at least contain a product name');
+  }
+})
+
 // listen() method is responsible for listening for incoming connections on the specified port 
 app.listen(PORT, () =>
   console.log(`Example app listening at http://localhost:${PORT}`)
